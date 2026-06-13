@@ -38,6 +38,53 @@ a { text-decoration: none; }
 
 /* Animations */
 @keyframes tfRise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes tfIntroPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.85; } }
+@keyframes tfIntroBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+@keyframes tfIntroLogoIn { from { opacity: 0; transform: scale(1.08); } to { opacity: 1; transform: scale(1); } }
+
+/* ===================== INTRO SCREEN ===================== */
+.tf-intro {
+  position: fixed; top: 0; left: 0; z-index: 100;
+  width: 100%; height: 100vh;
+  background: #131A3C;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  overflow: hidden;
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.1, 1);
+}
+.tf-intro--hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+/* Hide header while intro is showing */
+.intro-active .tf-header { opacity: 0; pointer-events: none; }
+/* Lock scroll while intro is active */
+.intro-active { overflow: hidden; height: 100vh; }
+.tf-intro__glow {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 800px; max-width: 160%; height: 600px;
+  background: radial-gradient(ellipse at center, rgba(59,130,230,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.tf-intro__logo {
+  position: relative; z-index: 1;
+  width: clamp(220px, 50vw, 420px); height: auto;
+  animation: tfIntroLogoIn 1.2s var(--tf-ease) both;
+}
+.tf-intro__scroll {
+  position: absolute; bottom: clamp(32px, 5vh, 56px); left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: tfIntroPulse 2.8s ease-in-out infinite;
+}
+.tf-intro__scroll-text {
+  font-family: var(--tf-font-body); font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: rgba(201,220,240,0.6);
+}
+.tf-intro__scroll-arrows {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  animation: tfIntroBounce 2s ease-in-out infinite;
+}
+.tf-intro__scroll-arrows svg { opacity: 0.5; }
+.tf-intro__scroll-arrows svg:first-child { opacity: 0.3; }
 
 /* Utility */
 .tf-eyebrow {
@@ -448,7 +495,20 @@ a { text-decoration: none; }
 }
 </style>
 </head>
-<body>
+<body class="intro-active">
+
+  <!-- ===================== INTRO SCREEN ===================== -->
+  <section class="tf-intro" id="introScreen">
+    <div class="tf-intro__glow"></div>
+    <img class="tf-intro__logo" src="assets/logos/10FoldFounders-dark-white.png" alt="10Fold Founders">
+    <div class="tf-intro__scroll">
+      <span class="tf-intro__scroll-text">Scroll</span>
+      <div class="tf-intro__scroll-arrows">
+        <svg width="20" height="10" viewBox="0 0 20 10" fill="none"><path d="M2 2l8 6 8-6" stroke="#C9DCF0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="20" height="10" viewBox="0 0 20 10" fill="none"><path d="M2 2l8 6 8-6" stroke="#C9DCF0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
 
   <!-- ===================== STICKY HEADER ===================== -->
   <header class="tf-header">
@@ -751,6 +811,50 @@ a { text-decoration: none; }
 <script>
 (function() {
   'use strict';
+
+  // ---- Intro curtain ----
+  var intro = document.getElementById('introScreen');
+  var introDismissed = false;
+
+  // Block all scroll events while intro or pause is active
+  var scrollLocked = true;
+  function blockScroll(e) { if (scrollLocked) e.preventDefault(); }
+  window.addEventListener('wheel', blockScroll, { passive: false });
+  window.addEventListener('touchmove', blockScroll, { passive: false });
+  window.addEventListener('keydown', function(e) {
+    if (scrollLocked && (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown' || e.key === 'ArrowUp' || e.key === 'PageUp')) {
+      e.preventDefault();
+    }
+  });
+
+  function dismissIntro() {
+    if (introDismissed) return;
+    introDismissed = true;
+    intro.classList.add('tf-intro--hidden');
+
+    // Wait for curtain animation to finish (900ms), then pause, then unlock scroll
+    intro.addEventListener('transitionend', function() {
+      intro.style.display = 'none';
+      document.body.classList.remove('intro-active');
+      window.scrollTo(0, 0);
+      // Scroll break — hold for 600ms after curtain clears
+      setTimeout(function() {
+        scrollLocked = false;
+        window.removeEventListener('wheel', blockScroll);
+        window.removeEventListener('touchmove', blockScroll);
+      }, 600);
+    }, { once: true });
+  }
+
+  // Trigger dismiss on first user scroll/touch/key gesture
+  window.addEventListener('wheel', function() { dismissIntro(); }, { passive: true, once: true });
+  window.addEventListener('touchstart', function() { dismissIntro(); }, { passive: true, once: true });
+  window.addEventListener('keydown', function handler(e) {
+    if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+      dismissIntro();
+      window.removeEventListener('keydown', handler);
+    }
+  });
 
   // ---- Header scroll behavior ----
   var bar = document.getElementById('headerBar');
