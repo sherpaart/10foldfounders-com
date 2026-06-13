@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10Fold Founders — Build a thriving trades business that serves God's Kingdom</title>
+<meta name="description" content="A community of founders scaling their businesses, reclaiming their time, and building legacies that honor God.">
+
+<!-- ANALYTICS: paste Google Analytics + ad tracking scripts here -->
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* Plus Jakarta Sans — local */
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/PlusJakartaSans-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 500; font-display: swap; src: url('assets/fonts/PlusJakartaSans-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url('assets/fonts/PlusJakartaSans-SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/PlusJakartaSans-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 800; font-display: swap; src: url('assets/fonts/PlusJakartaSans-ExtraBold.ttf') format('truetype'); }
+
+:root {
+  --tf-font-headline: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --tf-font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --tf-white: #FFFFFF;
+  --tf-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --tf-dur: 200ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #F7F9FC; font-family: var(--tf-font-body); color: #1B2350; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+::selection { background: #D6A22E; color: #1B2350; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; }
+
+/* Animations */
+@keyframes tfRise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Utility */
+.tf-eyebrow {
+  display: inline-block;
+  font-family: var(--tf-font-body);
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+.tf-container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.tf-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--tf-font-headline); font-weight: 700; font-size: 18px; line-height: 1;
+  border-radius: 100px; padding: 18px 38px;
+  color: #ffffff; border: none; cursor: pointer;
+  transition: filter var(--tf-dur) var(--tf-ease);
+}
+.tf-btn:hover { filter: brightness(1.09); }
+.tf-btn--blue { background: #3B82E6; box-shadow: 0 16px 38px rgba(59,130,230,0.34); }
+.tf-btn--brand { background: #2563C4; box-shadow: 0 16px 38px rgba(37,99,196,0.30); }
+
+/* Reveal animation */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--tf-ease), transform 0.7s var(--tf-ease);
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+[data-reveal-left] {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s var(--tf-ease), transform 0.7s var(--tf-ease);
+}
+[data-reveal-left].revealed { opacity: 1; transform: none; }
+[data-reveal-right] {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s var(--tf-ease), transform 0.7s var(--tf-ease);
+}
+[data-reveal-right].revealed { opacity: 1; transform: none; }
+
+/* ===================== HEADER ===================== */
+.tf-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  pointer-events: none; overflow: hidden;
+}
+.tf-header__bar {
+  pointer-events: auto;
+  background: rgba(247,249,252,0);
+  border-bottom: 1px solid rgba(27,35,80,0);
+  box-shadow: 0 0 0 rgba(27,35,80,0);
+  transform: translateY(0);
+  transition: transform 0.36s var(--tf-ease), background 0.35s var(--tf-ease), border-color 0.35s var(--tf-ease), box-shadow 0.35s var(--tf-ease);
+  will-change: transform;
+}
+.tf-header__inner {
+  max-width: 1240px; margin: 0 auto; padding: 10px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.tf-header__logo-wrap {
+  position: relative; height: 48px; width: 200px;
+}
+.tf-header__logo {
+  position: absolute; left: 0; top: 0; height: 48px; width: auto;
+  transition: opacity 0.35s var(--tf-ease);
+}
+.tf-header__join {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--tf-font-headline); font-weight: 700; font-size: 15px; line-height: 1;
+  border-radius: 100px; padding: 10px 22px;
+  background: transparent; color: #ffffff; border: 2.5px solid rgba(255,255,255,0.85);
+  transition: color 0.35s var(--tf-ease), border-color 0.35s var(--tf-ease), background 0.2s var(--tf-ease);
+}
+.tf-header__join:hover { background: rgba(255,255,255,0.12); }
+
+/* ===================== HERO ===================== */
+.tf-hero {
+  position: relative;
+  background: linear-gradient(165deg, #82AAD0 0%, #5E86B5 16%, #3C5C80 40%, #21384F 70%, #152A3C 100%);
+  overflow: hidden; min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.tf-hero__sweep {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.tf-hero__glow {
+  position: absolute; top: -10%; right: -6%; width: 1100px; max-width: 120%; height: 760px;
+  background: radial-gradient(ellipse at 70% 26%, rgba(151,180,208,0.34) 0%, rgba(201,220,240,0.10) 44%, transparent 72%);
+  opacity: 0.5;
+}
+.tf-hero__content {
+  position: relative; z-index: 1; width: 100%; max-width: 1180px; margin: 0 auto;
+  padding: clamp(58px, 6.5vh, 80px) 24px clamp(28px, 4vh, 52px);
+  text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+  gap: clamp(20px, 3vh, 40px); min-height: 100vh;
+}
+.tf-hero h1 {
+  font-family: var(--tf-font-headline); font-weight: 800; color: var(--tf-white);
+  font-size: clamp(1.8rem, 3.3vw, 2.9rem); line-height: 1.07; letter-spacing: -0.6px;
+  margin: clamp(8px, 1.4vh, 16px) auto 0; max-width: 22ch; text-wrap: balance;
+}
+.tf-hero__sub {
+  font-size: clamp(0.98rem, 1.4vw, 1.16rem); line-height: 1.5; color: #C9DCF0;
+  margin: clamp(8px, 1.4vh, 14px) auto 0; max-width: 52ch;
+}
+.tf-hero__video-wrap {
+  height: clamp(220px, 50vh, 600px); aspect-ratio: 16 / 9; max-width: 100%; margin: 0 auto;
+  background: linear-gradient(135deg, #C9DCF0 0%, #82AAD0 38%, #3B82E6 100%);
+  padding: 2px; border-radius: 22px;
+  box-shadow: 0 50px 120px rgba(59,130,230,0.42), 0 14px 34px rgba(0,0,0,0.4);
+}
+.tf-hero__video-inner {
+  position: relative; width: 100%; height: 100%; border-radius: 21px; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, #243A86 0%, #131A3C 75%);
+}
+.tf-hero__micro {
+  font-size: 14px; line-height: 1.5; color: rgba(201,220,240,0.78); margin: 0; max-width: 44ch;
+}
+
+/* ===================== PROBLEM ===================== */
+.tf-problem { background: var(--tf-white); padding: clamp(64px, 9vw, 116px) 0; }
+.tf-problem__grid {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+}
+.tf-problem__card {
+  position: relative; border-radius: 28px; overflow: hidden;
+  min-height: clamp(440px, 72vh, 700px);
+  display: flex; align-items: center;
+  box-shadow: 0 40px 90px rgba(27,35,80,0.22);
+}
+.tf-problem__img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+.tf-problem__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(13,18,38,0.9) 0%, rgba(13,18,38,0.72) 38%, rgba(13,18,38,0.28) 66%, rgba(13,18,38,0) 88%);
+}
+.tf-problem__text {
+  position: relative; z-index: 1; max-width: 560px; padding: clamp(36px, 5vw, 72px);
+}
+.tf-problem__text h2 {
+  font-family: var(--tf-font-headline); font-weight: 800; color: #ffffff;
+  font-size: clamp(1.9rem, 3.8vw, 2.9rem); line-height: 1.1; letter-spacing: -0.4px;
+  margin: 14px 0 0; text-wrap: balance;
+}
+.tf-problem__text p {
+  font-size: clamp(1.05rem, 1.9vw, 1.2rem); line-height: 1.7; color: #C9DCF0; margin: 22px 0 0;
+}
+.tf-problem__text p strong {
+  color: #ffffff; font-weight: 500;
+}
+
+/* ===================== WHAT'S INSIDE ===================== */
+.tf-inside {
+  position: relative;
+  background: linear-gradient(180deg, #F7F9FC 0%, #EAF1F8 46%, #D4E3F3 100%);
+  padding: 0 0 clamp(40px, 6vw, 80px);
+}
+.tf-section-header {
+  position: sticky; top: 70px; z-index: 20;
+  background: #F7F9FC;
+  box-shadow: 0 10px 24px rgba(27,35,80,0);
+  padding: clamp(16px, 2.4vh, 24px) 24px clamp(14px, 2vh, 20px);
+  text-align: center;
+  transition: top 0.36s var(--tf-ease), box-shadow 0.3s var(--tf-ease);
+}
+.tf-section-header h2 {
+  font-family: var(--tf-font-headline); font-weight: 800; color: #1B2350;
+  font-size: clamp(1.8rem, 3.8vw, 2.7rem); line-height: 1.12; letter-spacing: -0.4px;
+  margin: 6px 0 0;
+}
+.tf-inside__intro {
+  font-size: clamp(1.05rem, 1.7vw, 1.2rem); line-height: 1.6; color: rgba(27,35,80,0.66);
+  margin: 0 auto clamp(20px, 3vw, 36px); max-width: 52ch; text-align: center;
+}
+.tf-fold {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(40px, 6vw, 90px); align-items: center;
+  min-height: clamp(380px, 64vh, 580px); padding: clamp(28px, 4vh, 56px) 0;
+}
+.tf-fold__text h3 {
+  font-family: var(--tf-font-headline); font-weight: 800; color: #1B2350;
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem); line-height: 1.1; letter-spacing: -0.4px;
+  margin: 14px 0 0;
+}
+.tf-fold__text p { font-size: clamp(1.05rem, 1.7vw, 1.2rem); line-height: 1.65; color: rgba(27,35,80,0.74); margin: 18px 0 0; max-width: 44ch; }
+.tf-fold__text p.secondary { font-size: clamp(1rem, 1.5vw, 1.1rem); color: rgba(27,35,80,0.58); margin-top: 14px; }
+.tf-fold__num {
+  display: flex; align-items: center; gap: 14px;
+}
+.tf-fold__num span:first-child {
+  font-family: var(--tf-font-headline); font-weight: 800; font-size: 17px; letter-spacing: 0.5px;
+}
+.tf-fold__num-line { height: 1px; width: 46px; background: rgba(27,35,80,0.18); display: inline-block; }
+.tf-fold__img-wrap {
+  position: relative; aspect-ratio: 5 / 4;
+}
+.tf-fold__img {
+  position: relative; z-index: 1; width: 100%; height: 100%; border-radius: 26px; overflow: hidden;
+  box-shadow: 0 34px 70px rgba(27,35,80,0.26), 0 10px 24px rgba(27,35,80,0.14);
+}
+.tf-fold__img img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 26px; }
+.tf-fold__icon {
+  position: absolute; z-index: 0;
+  width: clamp(80px, 10vw, 110px); height: clamp(80px, 10vw, 110px);
+  display: flex; align-items: center; justify-content: center;
+  color: #2563C4;
+}
+.tf-fold__icon--tr { top: clamp(-71px, -9vw, -100px); right: clamp(-71px, -9vw, -100px); }
+.tf-fold__icon--tl { top: clamp(-71px, -9vw, -100px); left: clamp(-71px, -9vw, -100px); }
+
+/* ===================== BELIEVE BAND ===================== */
+.tf-believe {
+  position: relative;
+  background: linear-gradient(150deg, #82AAD0 0%, #5E86B5 18%, #3C5C80 44%, #21384F 74%, #152A3C 100%);
+  padding: clamp(80px, 11vw, 140px) 0; overflow: hidden;
+}
+.tf-believe__glow {
+  position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+  width: 1100px; max-width: 150%; height: 700px;
+  background: radial-gradient(ellipse at 50% 30%, rgba(59,130,230,0.34) 0%, transparent 68%);
+  pointer-events: none;
+}
+.tf-believe__text { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px; text-align: center; }
+.tf-believe__text h2 {
+  font-family: var(--tf-font-headline); font-weight: 800; color: var(--tf-white);
+  font-size: clamp(2.2rem, 5.4vw, 3.6rem); line-height: 1.08; letter-spacing: -0.5px;
+  margin: 20px 0 0; text-wrap: balance;
+}
+.tf-believe__text p {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.55; color: #C9DCF0;
+  margin: 24px auto 0; max-width: 40ch;
+}
+
+/* ===================== HOST ===================== */
+.tf-host { background: var(--tf-white); padding: clamp(64px, 9vw, 116px) 0; }
+.tf-host__grid {
+  max-width: 1120px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(36px, 5vw, 72px); align-items: center;
+}
+.tf-host__photo-wrap { position: relative; }
+.tf-host__photo-accent {
+  position: absolute; left: -16px; top: -16px; width: 60%; height: 55%;
+  background: linear-gradient(135deg, #82AAD0, #3B82E6); border-radius: 20px; opacity: 0.5;
+}
+.tf-host__photo {
+  position: relative; aspect-ratio: 4 / 5; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 26px 64px rgba(27,35,80,0.18);
+}
+.tf-host__photo img { width: 100%; height: 100%; object-fit: cover; }
+.tf-host__info h2 {
+  font-family: var(--tf-font-headline); font-weight: 800; color: #1B2350;
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem); line-height: 1.16; letter-spacing: -0.4px;
+  margin: 14px 0 0;
+}
+.tf-host__info .tf-host__role {
+  font-size: 15px; letter-spacing: 0.3px; color: #3B82E6; font-weight: 600; margin: 6px 0 0;
+}
+.tf-host__info p { font-size: clamp(1rem, 1.8vw, 1.12rem); line-height: 1.7; color: rgba(27,35,80,0.74); margin: 22px 0 0; }
+
+/* ===================== PRICING ===================== */
+.tf-pricing {
+  position: relative; background: #EEF2F7; padding: clamp(64px, 9vw, 116px) 0; overflow: hidden;
+}
+.tf-pricing__inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; padding: 0 24px; }
+.tf-pricing__card {
+  background: var(--tf-white); border-radius: 24px;
+  box-shadow: 0 30px 70px rgba(27,35,80,0.16); overflow: hidden;
+}
+.tf-pricing__header {
+  position: relative;
+  background: linear-gradient(150deg, #82AAD0 0%, #5E86B5 18%, #3C5C80 44%, #21384F 74%, #152A3C 100%);
+  padding: clamp(30px, 4vw, 42px) 32px; text-align: center; overflow: hidden;
+}
+.tf-pricing__header-glow {
+  position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
+  width: 600px; max-width: 130%; height: 400px;
+  background: radial-gradient(ellipse at center, rgba(59,130,230,0.34), transparent 70%);
+  pointer-events: none;
+}
+.tf-pricing__badge {
+  display: inline-block; padding: 4px 14px; border-radius: 100px;
+  background: #D6A22E; color: #1B2350;
+  font-family: var(--tf-font-headline); font-weight: 700; font-size: 13px;
+}
+.tf-pricing__price {
+  display: flex; align-items: baseline; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 20px;
+}
+.tf-pricing__price-amount {
+  font-family: var(--tf-font-headline); font-weight: 800; color: var(--tf-white);
+  font-size: clamp(3.2rem, 9vw, 4.4rem); line-height: 1; letter-spacing: -1.5px;
+}
+.tf-pricing__price-period { font-size: 1.15rem; color: #C9DCF0; }
+.tf-pricing__regular { font-size: 0.95rem; color: rgba(201,220,240,0.8); margin: 10px 0 0; }
+.tf-pricing__body { padding: clamp(26px, 4vw, 36px) clamp(24px, 4vw, 36px); }
+.tf-pricing__body > p { font-size: 1.05rem; line-height: 1.65; color: #1B2350; margin: 0; text-align: center; }
+.tf-pricing__promo {
+  margin-top: 24px; background: #EEF2F7; border-left: 4px solid #D6A22E;
+  border-radius: 12px; padding: 18px 20px;
+}
+.tf-pricing__promo-eyebrow {
+  font-family: var(--tf-font-body); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 1.5px; font-weight: 700; color: #D6A22E; margin: 0 0 4px;
+}
+.tf-pricing__promo-title {
+  font-family: var(--tf-font-headline); font-weight: 800; font-size: 1.2rem; color: #1B2350; margin: 0;
+}
+.tf-pricing__promo-body {
+  font-size: 0.95rem; color: rgba(27,35,80,0.72); margin: 4px 0 0;
+}
+.tf-pricing__guarantee {
+  margin-top: 22px; background: #EEF2F7; border: 1.5px solid #3B82E6; border-radius: 16px;
+  padding: 22px; display: flex; gap: 16px; align-items: flex-start; text-align: left;
+}
+.tf-pricing__guarantee-icon {
+  flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px;
+  background: #1B2350; display: inline-flex; align-items: center; justify-content: center;
+}
+.tf-pricing__guarantee h3 {
+  font-family: var(--tf-font-headline); font-weight: 700; font-size: 1.15rem; color: #1B2350; margin: 0;
+}
+.tf-pricing__guarantee p { font-size: 0.95rem; line-height: 1.6; color: rgba(27,35,80,0.72); margin: 6px 0 0; }
+
+/* ===================== FAQ ===================== */
+.tf-faq { background: var(--tf-white); padding: 0 0 clamp(64px, 9vw, 116px); }
+.tf-faq__grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;
+}
+.tf-faq__tile {
+  position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden;
+  background: linear-gradient(145deg, #131A3C 0%, #243A86 52%, #3B82E6 100%);
+  box-shadow: 0 16px 40px rgba(27,35,80,0.14);
+  cursor: pointer;
+}
+.tf-faq__tile-face {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none; cursor: pointer; background: transparent;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start;
+  text-align: left; padding: 26px; font-family: var(--tf-font-body);
+}
+.tf-faq__tile-num {
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #D6A22E; font-weight: 700;
+}
+.tf-faq__tile-q {
+  font-family: var(--tf-font-headline); font-weight: 700;
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem); line-height: 1.18; color: var(--tf-white); letter-spacing: -0.3px;
+}
+.tf-faq__tile-play {
+  display: inline-flex; align-items: center; gap: 11px; color: var(--tf-white);
+}
+.tf-faq__tile-play-btn {
+  width: 42px; height: 42px; border-radius: 50%; background: #D6A22E;
+  display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 20px rgba(37,99,196,0.32);
+}
+.tf-faq__tile-play span { font-size: 14px; font-weight: 600; }
+.tf-faq__tile-video {
+  position: absolute; inset: 0; width: 100%; height: 100%; background: #131A3C;
+}
+
+/* ===================== FINAL CTA ===================== */
+.tf-final {
+  position: relative;
+  background: linear-gradient(150deg, #82AAD0 0%, #5E86B5 18%, #3C5C80 44%, #21384F 74%, #152A3C 100%);
+  padding: clamp(80px, 11vw, 140px) 0; overflow: hidden;
+}
+.tf-final__text {
+  position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 0 24px; text-align: center;
+}
+.tf-final__text h2 {
+  font-family: var(--tf-font-headline); font-weight: 800; color: var(--tf-white);
+  font-size: clamp(2rem, 4.8vw, 3.1rem); line-height: 1.1; letter-spacing: -0.5px;
+  margin: 0; text-wrap: balance;
+}
+.tf-final__text p {
+  font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.6; color: #C9DCF0;
+  margin: 22px auto 0; max-width: 48ch;
+}
+
+/* ===================== FOOTER ===================== */
+.tf-footer { background: #131A3C; padding: 48px 0; }
+.tf-footer__inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.tf-footer__copy { font-size: 13px; color: rgba(201,220,240,0.65); margin: 0; }
+
+/* ===================== MOBILE ===================== */
+@media (max-width: 768px) {
+  .tf-faq__grid { grid-template-columns: 1fr; }
+  .tf-fold { grid-template-columns: 1fr; min-height: auto; }
+  .tf-fold__text { order: 1 !important; }
+  .tf-fold__img-wrap { order: 2 !important; }
+  .tf-fold__icon { display: none; }
+  .tf-problem__overlay {
+    background: linear-gradient(180deg, rgba(13,18,38,0.88) 0%, rgba(13,18,38,0.7) 50%, rgba(13,18,38,0.4) 100%);
+  }
+  .tf-header__logo-wrap { width: 160px; height: 40px; }
+  .tf-header__logo { height: 40px; }
+  .tf-header__join { font-size: 13px; padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+
+  <!-- ===================== STICKY HEADER ===================== -->
+  <header class="tf-header">
+    <div class="tf-header__bar" id="headerBar">
+      <div class="tf-header__inner">
+        <div class="tf-header__logo-wrap">
+          <img id="logoWhite" class="tf-header__logo" src="assets/logos/10FoldFounders-dark-white.png" alt="10Fold Founders" style="opacity: 1;">
+          <img id="logoColor" class="tf-header__logo" src="assets/logos/10FoldFounders-color.png" alt="10Fold Founders" style="opacity: 0;">
+        </div>
+        <a id="headerJoin" class="tf-header__join" href="https://www.skool.com/10fold-growth-4686" target="_blank" rel="noopener">Join now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="tf-hero">
+    <div class="tf-hero__sweep">
+      <div class="tf-hero__glow"></div>
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%;" aria-hidden="true">
+        <defs>
+          <linearGradient id="gcSweep" x1="1" y1="0" x2="0.18" y2="1">
+            <stop offset="0%" stop-color="#AFC8E2" stop-opacity="0.55"></stop>
+            <stop offset="40%" stop-color="#82AAD0" stop-opacity="0.20"></stop>
+            <stop offset="100%" stop-color="#82AAD0" stop-opacity="0"></stop>
+          </linearGradient>
+          <linearGradient id="gcLine" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0%" stop-color="#C9DCF0" stop-opacity="0.12"></stop>
+            <stop offset="62%" stop-color="#DCE8F5" stop-opacity="0.7"></stop>
+            <stop offset="100%" stop-color="#EAF1FA" stop-opacity="0.92"></stop>
+          </linearGradient>
+        </defs>
+        <g style="opacity: 0.5;">
+          <path d="M0,824 C520,804 1010,724 1248,470 C1388,320 1432,176 1440,120 L1440,0 L0,0 Z" fill="url(#gcSweep)"></path>
+          <path d="M0,824 C520,804 1010,724 1248,470 C1388,320 1432,176 1440,120" fill="none" stroke="url(#gcLine)" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+        </g>
+      </svg>
+    </div>
+
+    <div class="tf-hero__content">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <span class="tf-eyebrow" style="color: #D6A22E;">For faith-led founders</span>
+        <h1>Build a thriving trades business that serves God's Kingdom</h1>
+        <p class="tf-hero__sub">A community of founders scaling their businesses, reclaiming their time, and building legacies that honor God.</p>
+      </div>
+
+      <!-- HERO VIDEO -->
+      <div class="tf-hero__video-wrap">
+        <div class="tf-hero__video-inner">
+          <!-- VIDALYTICS EMBED: VSL -->
+          <div id="vidalytics_embed_ptY3TCb7JG6IlSTk" style="position: absolute; inset: 0; width: 100%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.4vh, 14px);">
+        <a href="https://www.skool.com/10fold-growth-4686" target="_blank" rel="noopener" class="tf-btn tf-btn--blue" style="font-size: 19px; padding: 20px 44px;">Join the community</a>
+        <p class="tf-hero__micro">$29/month for founding members (regularly $97). Cancel anytime. 90-day money-back guarantee.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2 — THE PROBLEM ===================== -->
+  <section class="tf-problem">
+    <div class="tf-problem__grid">
+      <div class="tf-problem__card">
+        <img class="tf-problem__img" src="assets/photos/problem.jpg" alt="Founder at work" loading="lazy">
+        <div class="tf-problem__overlay"></div>
+        <div class="tf-problem__text">
+          <span class="tf-eyebrow" style="color: #D6A22E;">The real cost</span>
+          <h2>Your business should support your life, not dictate it.</h2>
+          <p>Every hat is yours: the truck, the books, the bids, the callbacks. And the cost lands on what matters most. Time. Family. Faith.</p>
+          <p><strong>You weren't called to build an idol out of your job. You were called to build something that serves the life God gave you.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3 — WHAT'S INSIDE ===================== -->
+  <section class="tf-inside">
+    <!-- Background S-curve -->
+    <svg viewBox="0 0 1440 3200" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;" aria-hidden="true">
+      <path d="M720,-40 C1180,260 1180,560 720,760 C260,960 260,1260 720,1460 C1180,1660 1180,1960 720,2160 C320,2340 320,2620 720,2820 C940,2940 1080,3080 760,3240" fill="none" stroke="rgba(27,35,80,0.07)" stroke-width="1"></path>
+    </svg>
+
+    <div class="tf-section-header" id="insideHeader">
+      <span class="tf-eyebrow" style="color: #2563C4;">The membership</span>
+      <h2>What's inside</h2>
+    </div>
+
+    <div style="position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: clamp(22px, 3vh, 40px) 24px 0;">
+      <p class="tf-inside__intro">Everything you need to build a thriving business, in one room. Systems, accountability, and relationships, with people who pray for you.</p>
+
+      <!-- Fold 01 — Live sessions -->
+      <div class="tf-fold">
+        <div class="tf-fold__text" data-reveal-left style="order: 1;">
+          <div class="tf-fold__num"><span style="color: #2563C4;">01</span><span class="tf-fold__num-line"></span></div>
+          <h3>Live sessions</h3>
+          <p>A monthly session with all three hosts, plus deep dives and hot seats. Every call opens in prayer.</p>
+          <p class="secondary">Bring a real problem from your week and leave with a next step, not a theory.</p>
+        </div>
+        <div class="tf-fold__img-wrap" data-reveal-right style="order: 2;">
+          <div class="tf-fold__img"><img src="assets/photos/inside_01.jpg" alt="Live sessions" loading="lazy"></div>
+          <div class="tf-fold__icon tf-fold__icon--tr"><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"></path><rect width="14" height="12" x="2" y="6" rx="2" ry="2"></rect></svg></div>
+        </div>
+      </div>
+
+      <!-- Fold 02 — The podcast -->
+      <div class="tf-fold">
+        <div class="tf-fold__text" data-reveal-right style="order: 2;">
+          <div class="tf-fold__num"><span style="color: #2F6CA8;">02</span><span class="tf-fold__num-line"></span></div>
+          <h3>The podcast</h3>
+          <p>Weekly conversations with the hosts and interviews with entrepreneurs who have wins and scars to share.</p>
+          <p class="secondary">Listen on the drive between jobs. Honest talk from people who have actually built something.</p>
+        </div>
+        <div class="tf-fold__img-wrap" data-reveal-left style="order: 1;">
+          <div class="tf-fold__img"><img src="assets/photos/inside_02.jpg" alt="The podcast" loading="lazy"></div>
+          <div class="tf-fold__icon tf-fold__icon--tl"><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line></svg></div>
+        </div>
+      </div>
+
+      <!-- Fold 03 — The Classroom -->
+      <div class="tf-fold">
+        <div class="tf-fold__text" data-reveal-left style="order: 1;">
+          <div class="tf-fold__num"><span style="color: #7C4DE0;">03</span><span class="tf-fold__num-line"></span></div>
+          <h3>The Classroom</h3>
+          <p>Start here guides, the tools library, and a searchable vault of every past session.</p>
+          <p class="secondary">Everything is organized so you can find the one thing you need, right when you need it.</p>
+        </div>
+        <div class="tf-fold__img-wrap" data-reveal-right style="order: 2;">
+          <div class="tf-fold__img"><img src="assets/photos/inside_03.jpg" alt="The Classroom" loading="lazy"></div>
+          <div class="tf-fold__icon tf-fold__icon--tr"><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+        </div>
+      </div>
+
+      <!-- Fold 04 — A free CRM -->
+      <div class="tf-fold">
+        <div class="tf-fold__text" data-reveal-right style="order: 2;">
+          <div class="tf-fold__num"><span style="color: #B07E1E;">04</span><span class="tf-fold__num-line"></span></div>
+          <h3>A free CRM</h3>
+          <p>Free access to GoHighLevel as part of your membership. If you don't have a CRM in place, now you do.</p>
+          <p class="secondary">Capture leads, follow up, and keep your whole pipeline in one place, set up with you.</p>
+        </div>
+        <div class="tf-fold__img-wrap" data-reveal-left style="order: 1;">
+          <div class="tf-fold__img"><img src="assets/photos/inside_04.jpg" alt="A free CRM" loading="lazy"></div>
+          <div class="tf-fold__icon tf-fold__icon--tl"><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg></div>
+        </div>
+      </div>
+
+      <!-- Fold 05 — New tools every week -->
+      <div class="tf-fold">
+        <div class="tf-fold__text" data-reveal-left style="order: 1;">
+          <div class="tf-fold__num"><span style="color: #2563C4;">05</span><span class="tf-fold__num-line"></span></div>
+          <h3>New tools every week</h3>
+          <p>Fresh calculators, worksheets, and AI tools dropped into the library every week.</p>
+          <p class="secondary">Built for the work you actually do, not busywork. If it would save you an afternoon, it lands here.</p>
+        </div>
+        <div class="tf-fold__img-wrap" data-reveal-right style="order: 2;">
+          <div class="tf-fold__img"><img src="assets/photos/inside_05.jpg" alt="New tools every week" loading="lazy"></div>
+          <div class="tf-fold__icon tf-fold__icon--tr"><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></div>
+        </div>
+      </div>
+
+      <!-- Fold 06 — No one builds alone -->
+      <div class="tf-fold">
+        <div class="tf-fold__text" data-reveal-right style="order: 2;">
+          <div class="tf-fold__num"><span style="color: #1B2350;">06</span><span class="tf-fold__num-line"></span></div>
+          <h3>No one builds alone</h3>
+          <p>A community of founders who know the weight you're carrying, share your faith, and make sure you never carry it by yourself.</p>
+          <p class="secondary">Ask the question you were embarrassed to ask. Someone here has been exactly where you are.</p>
+        </div>
+        <div class="tf-fold__img-wrap" data-reveal-left style="order: 1;">
+          <div class="tf-fold__img"><img src="assets/photos/inside_06.jpg" alt="No one builds alone" loading="lazy"></div>
+          <div class="tf-fold__icon tf-fold__icon--tl"><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4 — WHAT WE BELIEVE ===================== -->
+  <section class="tf-believe">
+    <div class="tf-believe__glow"></div>
+    <svg viewBox="0 0 1440 600" preserveAspectRatio="none" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 72%; pointer-events: none;" aria-hidden="true">
+      <defs><linearGradient id="gcBelieve" x1="0" y1="1" x2="0.2" y2="0"><stop offset="0%" stop-color="#82AAD0" stop-opacity="0"></stop><stop offset="100%" stop-color="#82AAD0" stop-opacity="0.14"></stop></linearGradient></defs>
+      <path d="M0,600 L0,540 C380,520 800,480 1010,360 C1190,258 1330,130 1440,40 L1440,600 Z" fill="url(#gcBelieve)"></path>
+      <path d="M0,540 C380,520 800,480 1010,360 C1190,258 1330,130 1440,40" fill="none" stroke="#82AAD0" stroke-opacity="0.45" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+    </svg>
+    <div class="tf-believe__text">
+      <span class="tf-eyebrow" style="color: #D6A22E;">What we believe</span>
+      <h2>Build what's entrusted to you.</h2>
+      <p>Build to last. Build for freedom. Build with honesty and integrity, always. No one builds alone.</p>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5 — YOUR HOST ===================== -->
+  <section class="tf-host">
+    <div class="tf-host__grid">
+      <div class="tf-host__photo-wrap" data-reveal>
+        <div class="tf-host__photo-accent"></div>
+        <div class="tf-host__photo">
+          <img src="assets/photos/host.jpg" alt="Arthur Tew" loading="lazy">
+        </div>
+      </div>
+      <div class="tf-host__info" data-reveal>
+        <span class="tf-eyebrow" style="color: #7C4DE0;">Your host</span>
+        <h2>Arthur Tew</h2>
+        <p class="tf-host__role">Founding partner</p>
+        <p>Arthur has spent his career as an entrepreneur, building businesses and learning the most from the mistakes. He believes wisdom is meant to be shared, and that every founder in the room has some worth drawing out. He hosts 10Fold Founders to help faith-led founders build thriving businesses that honor God.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 6 — PRICING ===================== -->
+  <section class="tf-pricing">
+    <div class="tf-pricing__inner">
+      <div style="text-align: center; margin-bottom: clamp(28px, 4vw, 40px);">
+        <span class="tf-eyebrow" style="color: #7C4DE0;">Founding offer</span>
+        <h2 style="font-family: var(--tf-font-headline); font-weight: 800; color: #1B2350; font-size: clamp(1.8rem, 3.8vw, 2.7rem); line-height: 1.12; letter-spacing: -0.4px; margin: 12px 0 0;">Founding member pricing</h2>
+      </div>
+
+      <div class="tf-pricing__card">
+        <div class="tf-pricing__header">
+          <div class="tf-pricing__header-glow"></div>
+          <div style="position: relative;">
+            <span class="tf-pricing__badge">Founding member rate</span>
+            <div class="tf-pricing__price">
+              <span class="tf-pricing__price-amount">$29</span>
+              <span class="tf-pricing__price-period">/month</span>
+            </div>
+            <p class="tf-pricing__regular">regularly <s>$97/month</s></p>
+          </div>
+        </div>
+
+        <div class="tf-pricing__body">
+          <p>Join as a founding member and the price you join at is the price you keep. Cancel anytime.</p>
+
+          <div class="tf-pricing__promo">
+            <p class="tf-pricing__promo-eyebrow">Promo code</p>
+            <p class="tf-pricing__promo-title">founder29</p>
+            <p class="tf-pricing__promo-body">Use code founder29 at checkout for the founding rate.</p>
+          </div>
+
+          <div class="tf-pricing__guarantee">
+            <span class="tf-pricing__guarantee-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#D6A22E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            </span>
+            <div>
+              <h3>Try it for 90 days.</h3>
+              <p>If you're not getting the value we promise in your first 90 days, cancel and we'll refund your money.</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 26px;">
+            <a href="https://www.skool.com/10fold-growth-4686" target="_blank" rel="noopener" class="tf-btn tf-btn--brand" style="display: flex; width: 100%;">Join the community</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 7 — QUESTIONS, ANSWERED ===================== -->
+  <section class="tf-faq">
+    <div class="tf-section-header" id="faqHeader">
+      <span class="tf-eyebrow" style="color: #7C4DE0;">Straight answers</span>
+      <h2>Questions, answered</h2>
+    </div>
+    <div style="max-width: 1120px; margin: 0 auto; padding: clamp(28px, 4vh, 52px) 24px 0;">
+      <div class="tf-faq__grid" id="faqGrid">
+        <!-- FAQ tiles are rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 8 — FINAL CTA ===================== -->
+  <section class="tf-final">
+    <div style="position: absolute; inset: 0; pointer-events: none; overflow: hidden;">
+      <div style="position: absolute; top: -12%; left: 50%; transform: translateX(-50%); width: 1100px; max-width: 150%; height: 700px; background: radial-gradient(ellipse at 50% 30%, rgba(59,130,230,0.36) 0%, transparent 68%);"></div>
+      <svg viewBox="0 0 1440 600" preserveAspectRatio="none" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 72%;" aria-hidden="true">
+        <defs><linearGradient id="gcFinal" x1="0" y1="1" x2="0.2" y2="0"><stop offset="0%" stop-color="#82AAD0" stop-opacity="0"></stop><stop offset="100%" stop-color="#82AAD0" stop-opacity="0.15"></stop></linearGradient></defs>
+        <path d="M0,600 L0,540 C380,520 800,480 1010,360 C1190,258 1330,130 1440,40 L1440,600 Z" fill="url(#gcFinal)"></path>
+        <path d="M0,540 C380,520 800,480 1010,360 C1190,258 1330,130 1440,40" fill="none" stroke="#82AAD0" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+      </svg>
+    </div>
+    <div class="tf-final__text">
+      <h2>Scale the business. Get your life back.</h2>
+      <p>Build something that grows without consuming you, and spend your time on what matters most: your family, your faith, and the life God gave you.</p>
+      <div style="margin-top: clamp(30px, 4vw, 44px); display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <a href="https://www.skool.com/10fold-growth-4686" target="_blank" rel="noopener" class="tf-btn tf-btn--brand">Join the community</a>
+        <p class="tf-hero__micro">$29/month for founding members (regularly $97). Cancel anytime. 90-day money-back guarantee.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="tf-footer">
+    <div class="tf-footer__inner">
+      <img src="assets/logos/10FoldFounders-dark-white.png" alt="10Fold Founders" style="height: 30px; width: auto;">
+      <p class="tf-footer__copy">&copy; 2026 10Fold Founders</p>
+    </div>
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // ---- Header scroll behavior ----
+  var bar = document.getElementById('headerBar');
+  var logoWhite = document.getElementById('logoWhite');
+  var logoColor = document.getElementById('logoColor');
+  var joinBtn = document.getElementById('headerJoin');
+  var insideHeader = document.getElementById('insideHeader');
+  var faqHeader = document.getElementById('faqHeader');
+  var bands = [insideHeader, faqHeader].filter(Boolean);
+
+  var lastY = window.scrollY || 0;
+  var headerHidden = false;
+  var atTop = true;
+  var headerH = bar ? bar.offsetHeight : 70;
+
+  bands.forEach(function(b) { b.style.top = headerH + 'px'; });
+
+  function applyTop(isTop) {
+    if (bar) {
+      bar.style.background = isTop ? 'rgba(247,249,252,0)' : 'rgba(247,249,252,0.92)';
+      bar.style.borderBottomColor = isTop ? 'rgba(27,35,80,0)' : 'rgba(27,35,80,0.10)';
+      bar.style.boxShadow = isTop ? '0 0 0 rgba(27,35,80,0)' : '0 8px 24px rgba(27,35,80,0.07)';
+      bar.style.backdropFilter = isTop ? 'none' : 'blur(14px)';
+      bar.style.webkitBackdropFilter = isTop ? 'none' : 'blur(14px)';
+    }
+    if (logoWhite) logoWhite.style.opacity = isTop ? '1' : '0';
+    if (logoColor) logoColor.style.opacity = isTop ? '0' : '1';
+    if (joinBtn) {
+      joinBtn.style.color = isTop ? '#ffffff' : '#2563C4';
+      joinBtn.style.borderColor = isTop ? 'rgba(255,255,255,0.85)' : '#2563C4';
+    }
+  }
+  applyTop(true);
+
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY || 0;
+    var hidden = headerHidden;
+    if (y > lastY + 4 && y > 100) hidden = true;
+    else if (y < lastY - 4) hidden = false;
+    if (hidden !== headerHidden) {
+      headerHidden = hidden;
+      if (bar) bar.style.transform = hidden ? 'translateY(-100%)' : 'translateY(0)';
+      bands.forEach(function(b) { b.style.top = hidden ? '0px' : headerH + 'px'; });
+    }
+    var nowAtTop = y < 40;
+    if (nowAtTop !== atTop) { atTop = nowAtTop; applyTop(atTop); }
+
+    // Section-header shadow
+    var stickTop = headerHidden ? 0 : headerH;
+    bands.forEach(function(b) {
+      var stuck = b.getBoundingClientRect().top <= stickTop + 1;
+      b.style.boxShadow = stuck ? '0 10px 24px rgba(27,35,80,0.10)' : '0 10px 24px rgba(27,35,80,0)';
+    });
+    lastY = y;
+  }, { passive: true });
+
+  // ---- Scroll reveal ----
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('[data-reveal], [data-reveal-left], [data-reveal-right]').forEach(function(el) {
+      io.observe(el);
+    });
+  } else {
+    document.querySelectorAll('[data-reveal], [data-reveal-left], [data-reveal-right]').forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }
+
+  // ---- FAQ tiles ----
+  var faqs = [
+    { q: 'What does it cost?', embed: 'FAQ_01_Cost', code: 'S96YFTCFDOpK6v3C' },
+    { q: 'Is this just a way to sell me something else?', embed: 'FAQ_02_Upselling', code: 'XNT25OrKVCJSfmWB' },
+    { q: "What if I can't make the live events?", embed: 'FAQ_03_Attending_Events', code: 'Q_VJ1M2E6S0sPPRu' },
+    { q: 'Can I rewatch past content?', embed: 'FAQ_04_Rewatch_Content', code: 'eR828HjHurIhpiW5' },
+    { q: 'What do I get with the CRM?', embed: 'FAQ_05_CRM', code: '6yEeLPWoFYlSFpuf' },
+    { q: 'Why should I trust you?', embed: 'FAQ_06_Trust', code: 'D6RsGIjGePsdeMqm' },
+    { q: 'Is there a guarantee?', embed: 'FAQ_07_Guarantee', code: 'ihK08KDFDxPNEQ_7' },
+    { q: 'How do I sign up?', embed: 'FAQ_08_Sign_Up', code: 'tBMCGCdehl0vbBev' }
+  ];
+
+  var grid = document.getElementById('faqGrid');
+  faqs.forEach(function(faq, i) {
+    var tile = document.createElement('div');
+    tile.className = 'tf-faq__tile';
+    var num = String(i + 1).padStart(2, '0');
+    var domId = 'vidalytics_embed_' + faq.code;
+
+    tile.innerHTML =
+      '<button class="tf-faq__tile-face" aria-label="Play: ' + faq.q + '">' +
+        '<span class="tf-faq__tile-num">FAQ ' + num + '</span>' +
+        '<span class="tf-faq__tile-q">' + faq.q + '</span>' +
+        '<span class="tf-faq__tile-play">' +
+          '<span class="tf-faq__tile-play-btn"><svg viewBox="0 0 24 24" width="18" height="18" fill="#1B2350" aria-hidden="true"><polygon points="8 4 20 12 8 20 8 4"></polygon></svg></span>' +
+          '<span>Watch the answer</span>' +
+        '</span>' +
+      '</button>';
+
+    tile.addEventListener('click', function() {
+      tile.innerHTML = '<div class="tf-faq__tile-video"><div id="' + domId + '" style="position:absolute;inset:0;width:100%;height:100%;"></div></div>';
+      runVidalytics(domId, faq.code);
+    });
+
+    grid.appendChild(tile);
+  });
+
+  // ---- Vidalytics loader ----
+  function runVidalytics(domId, code) {
+    var base = 'https://fast.vidalytics.com/embeds/kK1OKtCk/' + code + '/';
+    var tryRun = function() {
+      var el = document.getElementById(domId);
+      if (!el) return;
+      el.innerHTML = '';
+      try { if (window.Vidalytics && window.Vidalytics.Embed) new window.Vidalytics.Embed().run(domId); } catch(e) {}
+    };
+    if (window.Vidalytics && window.Vidalytics.Embed) { tryRun(); return; }
+    if (!window.__vidQueue) window.__vidQueue = [];
+    window.__vidQueue.push(tryRun);
+    if (window.__vidLoaderStarted) return;
+    window.__vidLoaderStarted = true;
+    var load = function(u, cb) { var s = document.createElement('script'); s.async = 1; s.src = u; s.onload = cb; document.head.appendChild(s); };
+    load(base + 'loader.min.js', function() {
+      var flush = function() { (window.__vidQueue || []).forEach(function(fn) { fn(); }); window.__vidQueue = []; };
+      try {
+        var L = window.VidalyticsL && window.VidalyticsL.Loader;
+        var loader = L ? new L() : null;
+        if (loader && loader.loadScript) { loader.loadScript(base + 'player.min.js', flush); return; }
+      } catch(e) {}
+      load(base + 'player.min.js', flush);
+    });
+  }
+
+  // Boot hero video
+  runVidalytics('vidalytics_embed_ptY3TCb7JG6IlSTk', 'ptY3TCb7JG6IlSTk');
+})();
+</script>
+</body>
+</html>
