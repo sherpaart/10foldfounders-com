@@ -959,7 +959,9 @@ a { text-decoration: none; }
         '</span>' +
       '</button>';
 
-    tile.addEventListener('click', function() {
+    tile.addEventListener('click', function handler() {
+      tile.removeEventListener('click', handler);
+      tile.style.cursor = 'default';
       tile.innerHTML = '<div class="tf-faq__tile-video"><div id="' + domId + '" style="position:absolute;inset:0;width:100%;height:100%;"></div></div>';
       runVidalytics(domId, faq.code);
     });
@@ -968,28 +970,38 @@ a { text-decoration: none; }
   });
 
   // ---- Vidalytics loader ----
+  var vidReady = false;
+  var vidPending = [];
+  var load = function(u, cb) { var s = document.createElement('script'); s.async = 1; s.src = u; s.onload = cb; document.head.appendChild(s); };
+
+  function ensureVidalytics(cb) {
+    if (vidReady) { cb(); return; }
+    vidPending.push(cb);
+    if (window.__vidLoaderStarted) return;
+    window.__vidLoaderStarted = true;
+    // Use hero embed as the bootstrap source
+    var heroBase = 'https://fast.vidalytics.com/embeds/kK1OKtCk/ptY3TCb7JG6IlSTk/';
+    load(heroBase + 'loader.min.js', function() {
+      var flush = function() {
+        vidReady = true;
+        vidPending.forEach(function(fn) { fn(); });
+        vidPending = [];
+      };
+      try {
+        var L = window.VidalyticsL && window.VidalyticsL.Loader;
+        var loader = L ? new L() : null;
+        if (loader && loader.loadScript) { loader.loadScript(heroBase + 'player.min.js', flush); return; }
+      } catch(e) {}
+      load(heroBase + 'player.min.js', flush);
+    });
+  }
+
   function runVidalytics(domId, code) {
-    var base = 'https://fast.vidalytics.com/embeds/kK1OKtCk/' + code + '/';
-    var tryRun = function() {
+    ensureVidalytics(function() {
       var el = document.getElementById(domId);
       if (!el) return;
       el.innerHTML = '';
       try { if (window.Vidalytics && window.Vidalytics.Embed) new window.Vidalytics.Embed().run(domId); } catch(e) {}
-    };
-    if (window.Vidalytics && window.Vidalytics.Embed) { tryRun(); return; }
-    if (!window.__vidQueue) window.__vidQueue = [];
-    window.__vidQueue.push(tryRun);
-    if (window.__vidLoaderStarted) return;
-    window.__vidLoaderStarted = true;
-    var load = function(u, cb) { var s = document.createElement('script'); s.async = 1; s.src = u; s.onload = cb; document.head.appendChild(s); };
-    load(base + 'loader.min.js', function() {
-      var flush = function() { (window.__vidQueue || []).forEach(function(fn) { fn(); }); window.__vidQueue = []; };
-      try {
-        var L = window.VidalyticsL && window.VidalyticsL.Loader;
-        var loader = L ? new L() : null;
-        if (loader && loader.loadScript) { loader.loadScript(base + 'player.min.js', flush); return; }
-      } catch(e) {}
-      load(base + 'player.min.js', flush);
     });
   }
 
