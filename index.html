@@ -818,7 +818,8 @@ a { text-decoration: none; }
   var introDismissed = false;
 
   // Block all scroll events while intro or pause is active
-  var scrollLocked = true;
+  var introActive = document.body.classList.contains('intro-active');
+  var scrollLocked = introActive;
   function blockScroll(e) { if (scrollLocked) e.preventDefault(); }
   window.addEventListener('wheel', blockScroll, { passive: false });
   window.addEventListener('touchmove', blockScroll, { passive: false });
