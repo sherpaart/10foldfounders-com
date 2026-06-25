@@ -1,0 +1,43 @@
+/* 10Fold Founders — Typography tokens
+ * Headlines: Plus Jakarta Sans (700 Bold, 800 ExtraBold) — sentence case, short.
+ * Body + labels: Inter (400 Regular, 500 Medium, 600 SemiBold).
+ * Plus Jakarta Sans is for headlines and short impact phrases only, never long body.
+ */
+
+:root {
+  /* Families */
+  --tf-font-headline: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --tf-font-body:     'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Weights */
+  --tf-weight-regular:   400;
+  --tf-weight-medium:    500;
+  --tf-weight-semibold:  600;
+  --tf-weight-bold:      700;
+  --tf-weight-extrabold: 800;
+
+  /* Type scale (rem @ 16px base) */
+  --tf-text-eyebrow: 0.75rem;   /* 12px uppercase eyebrow */
+  --tf-text-caption: 0.8125rem; /* 13px caption/fine print */
+  --tf-text-small:   0.875rem;  /* 14px secondary body */
+  --tf-text-body:    1rem;      /* 16px body */
+  --tf-text-lead:    1.125rem;  /* 18px lead paragraph */
+  --tf-text-h3:      1.25rem;   /* 20px */
+  --tf-text-h2:      1.625rem;  /* 26px */
+  --tf-text-h1:      2.5rem;    /* 40px */
+  --tf-text-display: 3.5rem;    /* 56px hero display */
+
+  /* Line heights */
+  --tf-leading-tight: 1.1;   /* display + h1 */
+  --tf-leading-snug:  1.25;  /* h2/h3 */
+  --tf-leading-body:  1.6;   /* body copy */
+
+  /* Letter spacing */
+  --tf-tracking-eyebrow:  1.5px;   /* uppercase eyebrow labels */
+  --tf-tracking-headline: -0.3px;  /* headline optical tightening */
+  --tf-tracking-normal:   0;
+
+  /* ================= Semantic aliases ================= */
+  --font-heading: var(--tf-font-headline);
+  --font-body:    var(--tf-font-body);
+}

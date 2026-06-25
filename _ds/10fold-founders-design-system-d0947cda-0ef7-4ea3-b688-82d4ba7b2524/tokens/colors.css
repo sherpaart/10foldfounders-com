@@ -1,0 +1,63 @@
+/* 10Fold Founders — Color tokens
+ * Authoritative SS2026 palette. Use exactly; do not remix hex values.
+ * Founders shares the core 10Fold palette and adds the BLUE 10F mark identity.
+ * Base tokens carry the --tf- prefix (matches the source repo); semantic
+ * aliases below map intent to base so components never hard-code hex.
+ */
+
+:root {
+  /* ---- Core palette (shared with 10Fold Growth) ---- */
+  --tf-midnight: #152A36; /* header/footer bg, primary body text on light */
+  --tf-teal:     #114C5A; /* headlines + body on light, selected borders, primary CTA */
+  --tf-gold:     #FFC907; /* highlights, icon strokes, accents (never body text on white) */
+  --tf-amber:    #F89937; /* eyebrow/pillar labels, gradient partner, secondary accents */
+  --tf-sage:     #D9E8E2; /* tonal section bg, dividers, soft highlights */
+  --tf-mist:     #F1F5F5; /* card fills, input bg, soft section bg */
+  --tf-white:    #FFFFFF; /* default page bg, button text on dark */
+
+  /* ---- Founders blue identity (measured from the master logo art) ---- */
+  --tf-founders-steel: #82AAD0; /* primary Founders mark blue, cool counterpart to Gold */
+  --tf-founders-sky:   #97B4D0; /* light gradient stop, tints */
+  --tf-founders-navy:  #152A36; /* wordmark color paired with the blue (= Midnight) */
+
+  /* ---- Tints (derived for soft fills only, not in brand spec — use sparingly) ---- */
+  --tf-steel-tint: #E7EEF6; /* faint steel-blue wash for selected/active surfaces */
+
+  /* ---- Gradients ---- */
+  --tf-gradient-founders: linear-gradient(135deg, #97B4D0 0%, #82AAD0 45%, #152A36 100%); /* @kind color */
+  --tf-gradient-warm:     linear-gradient(135deg, #FFC907 0%, #F89937 100%); /* @kind color */
+  --tf-gradient-cta:      linear-gradient(135deg, #152A36 0%, #114C5A 100%); /* @kind color */
+
+  /* ================= Semantic aliases ================= */
+
+  /* Surfaces */
+  --surface-page:        var(--tf-white);
+  --surface-card:        var(--tf-white);
+  --surface-muted:       var(--tf-mist);   /* inputs, soft sections */
+  --surface-tonal:       var(--tf-sage);   /* tonal section bands */
+  --surface-inverse:     var(--tf-midnight); /* header/footer, dark panels */
+  --surface-inverse-2:   var(--tf-teal);
+
+  /* Text */
+  --text-strong:    var(--tf-midnight); /* primary body text on light */
+  --text-heading:   var(--tf-teal);     /* headlines on light */
+  --text-body:      var(--tf-teal);     /* body copy on light (passes contrast) */
+  --text-muted:     #4A6670;            /* desaturated teal for secondary text */
+  --text-on-dark:   var(--tf-white);
+  --text-on-dark-muted: rgba(241, 245, 245, 0.72);
+
+  /* Accents */
+  --accent-eyebrow: var(--tf-amber);     /* eyebrow/pillar labels */
+  --accent-highlight: var(--tf-gold);    /* highlights, icon strokes */
+  --accent-brand:   var(--tf-founders-steel); /* Founders cool accent */
+
+  /* Lines + borders */
+  --border-hairline: var(--tf-sage);     /* default card/divider hairline */
+  --border-selected: var(--tf-teal);     /* selected state (never Gold) */
+  --border-on-dark:  rgba(255, 255, 255, 0.16);
+
+  /* Feedback (derived, off the warm/cool axis — for app UI states) */
+  --state-success: #1F8A5B;
+  --state-warning: var(--tf-amber);
+  --state-danger:  #C0413B;
+}

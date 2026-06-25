@@ -1,0 +1,49 @@
+/* 10Fold Founders — Spacing, shape, elevation tokens
+ * Generous whitespace is a brand rule: a page that feels slightly empty is
+ * closer to right than a busy one. No heavy drop shadows, no decorative borders.
+ */
+
+:root {
+  /* Spacing scale (4px base) */
+  --tf-space-1: 4px;
+  --tf-space-2: 8px;
+  --tf-space-3: 12px;
+  --tf-space-4: 16px;
+  --tf-space-5: 24px;
+  --tf-space-6: 32px;
+  --tf-space-7: 48px;
+  --tf-space-8: 64px;
+  --tf-space-9: 96px;
+  --tf-space-10: 128px;
+
+  /* Radii */
+  --tf-radius-sm:   8px;   /* small blocks: testimonial, callout */
+  --tf-radius-card: 12px;  /* cards, inputs, panels */
+  --tf-radius-lg:   20px;  /* large feature panels */
+  --tf-radius-pill: 100px; /* buttons + chips */
+  --tf-radius-full: 9999px;
+
+  /* Elevation — intentionally restrained. Prefer hairline borders over shadow. */
+  --tf-shadow-none: none;
+  --tf-shadow-sm: 0 1px 2px rgba(21, 42, 54, 0.06);
+  --tf-shadow-md: 0 8px 24px rgba(21, 42, 54, 0.08); /* lifted card, modals only */
+  --tf-shadow-lg: 0 24px 60px rgba(21, 42, 54, 0.14); /* dialogs/popovers */
+
+  /* Layout */
+  --tf-container: 1120px;   /* default max content width */
+  --tf-container-narrow: 720px; /* prose/forms */
+  --tf-gutter: 24px;
+
+  /* Motion — calm and grounded; no bounces. */
+  --tf-ease: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --tf-ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --tf-dur-fast: 120ms; /* @kind other */
+  --tf-dur: 200ms; /* @kind other */
+  --tf-dur-slow: 320ms; /* @kind other */
+
+  /* ================= Semantic aliases ================= */
+  --radius-card: var(--tf-radius-card);
+  --radius-button: var(--tf-radius-pill);
+  --shadow-card: var(--tf-shadow-none);
+  --shadow-raised: var(--tf-shadow-md);
+}
