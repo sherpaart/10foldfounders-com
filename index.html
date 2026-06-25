@@ -114,6 +114,35 @@ body { overflow-x: clip; width: 100%; }
   /* Phase content inside accordion */
   .fw-phase { padding: 8px 0 16px !important; }
   .fw-phase > div { max-width: 100% !important; }
+  /* FAQ: single column, show 3 at a time on mobile */
+  [data-screen-label="Questions answered"] div[style*="repeat(2"] {
+    grid-template-columns: 1fr !important;
+  }
+  [data-screen-label="Questions answered"] div[style*="repeat(2"] > div:nth-child(n+4) {
+    display: none;
+  }
+  [data-screen-label="Questions answered"] div[style*="repeat(2"] > div.faq-shown {
+    display: block !important;
+  }
+  .faq-show-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 16px;
+    margin-top: 16px;
+    background: none;
+    border: 2px solid rgba(27,35,80,0.14);
+    border-radius: 14px;
+    font-family: var(--tf-font-headline);
+    font-weight: 700;
+    font-size: 15px;
+    color: #2563C4;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .faq-show-more:active { background: rgba(37,99,196,0.06); }
   /* Module grid: single column on mobile */
   .fw-phase div[style*="repeat(auto-fit, minmax(180px"] {
     grid-template-columns: 1fr !important;
@@ -141,6 +170,7 @@ body { overflow-x: clip; width: 100%; }
 @media (min-width: 768px) {
   .fw-acc-btn { display: none !important; }
   .fw-acc-panel { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
+  .faq-show-more { display: none !important; }
 }
 </style>
 <link rel="stylesheet" href="ds/10fold-founders-design-system-d0947cda-0ef7-4ea3-b688-82d4ba7b2524/tokens/fonts.css">
@@ -1278,7 +1308,7 @@ body { overflow-x: clip; width: 100%; }
       <h2 style="font-family: var(--tf-font-headline); font-weight: 800; color: #1B2350; font-size: clamp(1.8rem, 3.8vw, 2.7rem); line-height: 1.12; letter-spacing: -0.4px; margin: 6px 0 0;">Questions, answered</h2>
     </div>
     <div style="max-width: 1120px; margin: 0 auto; padding: clamp(28px, 4vh, 52px) 24px 0;">
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
+      <div id="faq-grid" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
         <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="8">
           <div style="position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: linear-gradient(145deg, #131A3C 0%, #243A86 52%, #3B82E6 100%); box-shadow: 0 16px 40px rgba(27,35,80,0.14);">
             <sc-if value="{{ faq.closed }}" hint-placeholder-val="{{ true }}">
@@ -1310,6 +1340,7 @@ body { overflow-x: clip; width: 100%; }
           </div>
         </sc-for>
       </div>
+      <button type="button" id="faq-more" class="faq-show-more">Show more</button>
     </div>
   </section>
 
@@ -1542,6 +1573,33 @@ class Component extends DCLogic {
 
     // Framework phase videos: lazy-load existing Vidalytics placeholders on scroll into view
     this._initPhaseVideos();
+
+    // FAQ: show-more button (mobile only, progressive reveal of 3 at a time)
+    this._initFaqShowMore();
+  }
+
+  _initFaqShowMore() {
+    const grid = document.getElementById('faq-grid');
+    const btn = document.getElementById('faq-more');
+    if (!grid || !btn) return;
+    let shown = 3;
+    const update = () => {
+      const items = Array.from(grid.children);
+      const total = items.length;
+      items.forEach((el, i) => { if (i >= 3 && i < shown) el.classList.add('faq-shown'); });
+      if (shown >= total) btn.style.display = 'none';
+    };
+    // Re-check after dc-runtime renders the sc-for
+    const check = () => {
+      const items = Array.from(grid.children);
+      if (items.length > 1) update();
+      else requestAnimationFrame(check);
+    };
+    requestAnimationFrame(check);
+    btn.addEventListener('click', () => {
+      shown += 3;
+      update();
+    });
   }
 
   _initPhaseVideos() {
