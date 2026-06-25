@@ -1947,8 +1947,6 @@ class Component extends DCLogic {
                 panel.style.maxHeight = h + 'px';
                 setTimeout(() => { panel.style.maxHeight = 'none'; }, 260);
               });
-              // Scroll button to top after panels have settled
-              setTimeout(() => btn.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }), 280);
             }
           });
         });
