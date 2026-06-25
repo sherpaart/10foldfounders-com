@@ -71,6 +71,7 @@ body { overflow-x: clip; width: 100%; }
     -webkit-tap-highlight-color: transparent;
   }
   .fw-acc-btn:active { background: rgba(27,35,80,0.04); }
+  .fw-acc-btn { scroll-margin-top: 80px; }
   .fw-acc-badge {
     flex: 0 0 auto;
     width: 34px; height: 34px;
@@ -1918,29 +1919,54 @@ class Component extends DCLogic {
           }
           btn.addEventListener('click', () => {
             const isOpen = btn.getAttribute('aria-expanded') === 'true';
-            // Close all other panels
+            const btnTop = btn.getBoundingClientRect().top;
+
+            // Calculate height of any open panel ABOVE the tapped button
+            let shiftAbove = 0;
+            track.querySelectorAll('.fw-acc-panel[data-open]').forEach(pnl => {
+              if (pnl !== panel && pnl.getBoundingClientRect().bottom <= btnTop + 5) {
+                shiftAbove += pnl.scrollHeight;
+              }
+            });
+
+            // Close all other panels instantly (no animation)
             track.querySelectorAll('.fw-acc-btn').forEach(b => {
               if (b !== btn) b.setAttribute('aria-expanded', 'false');
             });
             track.querySelectorAll('.fw-acc-panel').forEach(pnl => {
-              if (pnl !== panel) {
-                pnl.style.maxHeight = pnl.scrollHeight + 'px';
-                requestAnimationFrame(() => { pnl.style.maxHeight = '0'; pnl.removeAttribute('data-open'); });
+              if (pnl !== panel && pnl.hasAttribute('data-open')) {
+                pnl.style.transition = 'none';
+                pnl.style.maxHeight = '0';
+                pnl.removeAttribute('data-open');
+                pnl.style.opacity = '0';
               }
             });
+
+            // Correct scroll position so tapped button stays put
+            if (shiftAbove > 0) {
+              window.scrollBy({ top: -shiftAbove, behavior: 'instant' });
+            }
+
+            // Re-enable transitions on closed panels
+            requestAnimationFrame(() => {
+              track.querySelectorAll('.fw-acc-panel:not([data-open])').forEach(pnl => {
+                pnl.style.transition = '';
+              });
+            });
+
             if (isOpen) {
               // Close this panel
               btn.setAttribute('aria-expanded', 'false');
               panel.style.maxHeight = panel.scrollHeight + 'px';
               requestAnimationFrame(() => { panel.style.maxHeight = '0'; panel.removeAttribute('data-open'); });
             } else {
-              // Measure height while content is still in the DOM
+              // Measure height while content is visible
               p.style.display = 'block';
               panel.style.maxHeight = 'none';
               panel.style.opacity = '1';
               panel.setAttribute('data-open', '');
               const h = panel.scrollHeight;
-              // Now animate from 0 to measured height
+              // Animate from 0 to measured height
               panel.style.maxHeight = '0';
               btn.setAttribute('aria-expanded', 'true');
               requestAnimationFrame(() => {
