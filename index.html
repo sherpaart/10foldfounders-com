@@ -1820,6 +1820,14 @@ class Component extends DCLogic {
 
     const setActive = (i, scroll) => {
       active = Math.max(0, Math.min(N-1, i));
+      // Pause videos in non-active phases
+      phases.forEach((p, idx) => {
+        if (idx !== active) {
+          p.querySelectorAll('[data-phase-video] iframe').forEach(fr => {
+            if (fr.src) { fr.setAttribute('data-paused-src', fr.src); fr.src = ''; }
+          });
+        }
+      });
       if (mode === 'stepper') {
         phases.forEach((p,idx)=>{
           if (idx === active) { p.style.display='block'; if(!reduce){ p.style.opacity='0'; p.style.transform='translateY(8px)'; requestAnimationFrame(()=>{ p.style.transition='opacity .2s var(--tf-ease), transform .2s var(--tf-ease)'; p.style.opacity='1'; p.style.transform='none'; }); } }
@@ -1929,6 +1937,16 @@ class Component extends DCLogic {
             track.querySelectorAll('.fw-acc-panel[data-open]').forEach(pnl => {
               if (pnl !== panel && pnl.getBoundingClientRect().bottom <= btnTop + 5) {
                 shiftAbove += pnl.scrollHeight;
+              }
+            });
+
+            // Pause any playing phase videos in other panels
+            track.querySelectorAll('.fw-acc-panel').forEach(pnl => {
+              if (pnl !== panel) {
+                pnl.querySelectorAll('[data-phase-video] iframe').forEach(fr => {
+                  fr.setAttribute('data-paused-src', fr.src);
+                  fr.src = '';
+                });
               }
             });
 
