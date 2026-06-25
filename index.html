@@ -1909,18 +1909,33 @@ class Component extends DCLogic {
           }
           btn.addEventListener('click', () => {
             const isOpen = btn.getAttribute('aria-expanded') === 'true';
-            // Close all
-            track.querySelectorAll('.fw-acc-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
-            track.querySelectorAll('.fw-acc-panel').forEach(pnl => {
-              pnl.style.maxHeight = pnl.scrollHeight + 'px';
-              requestAnimationFrame(() => { pnl.style.maxHeight = '0'; pnl.removeAttribute('data-open'); });
+            // Close all other panels
+            track.querySelectorAll('.fw-acc-btn').forEach(b => {
+              if (b !== btn) b.setAttribute('aria-expanded', 'false');
             });
-            if (!isOpen) {
-              btn.setAttribute('aria-expanded', 'true');
+            track.querySelectorAll('.fw-acc-panel').forEach(pnl => {
+              if (pnl !== panel) {
+                pnl.style.maxHeight = pnl.scrollHeight + 'px';
+                requestAnimationFrame(() => { pnl.style.maxHeight = '0'; pnl.removeAttribute('data-open'); });
+              }
+            });
+            if (isOpen) {
+              // Close this panel
+              btn.setAttribute('aria-expanded', 'false');
+              panel.style.maxHeight = panel.scrollHeight + 'px';
+              requestAnimationFrame(() => { panel.style.maxHeight = '0'; panel.removeAttribute('data-open'); });
+            } else {
+              // Measure height while content is still in the DOM
+              p.style.display = 'block';
+              panel.style.maxHeight = 'none';
+              panel.style.opacity = '1';
               panel.setAttribute('data-open', '');
+              const h = panel.scrollHeight;
+              // Now animate from 0 to measured height
               panel.style.maxHeight = '0';
+              btn.setAttribute('aria-expanded', 'true');
               requestAnimationFrame(() => {
-                panel.style.maxHeight = panel.scrollHeight + 'px';
+                panel.style.maxHeight = h + 'px';
                 setTimeout(() => { panel.style.maxHeight = 'none'; }, 260);
               });
               // Scroll header into view
