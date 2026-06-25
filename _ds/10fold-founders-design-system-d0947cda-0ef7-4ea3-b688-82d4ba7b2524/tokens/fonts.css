@@ -1,0 +1,45 @@
+/* 10Fold Founders — Font face declarations
+ * Plus Jakarta Sans (headline font) is bundled as local .ttf and declared here.
+ * Inter (body font) is a license-free Google Font, imported from Google Fonts.
+ * NOTE: Inter is NOT bundled as local files — see SUBSTITUTIONS in README.
+ */
+
+/* Body font: Inter, pulled from Google Fonts (weights 400/500/600). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Headline font: Plus Jakarta Sans, bundled local .ttf */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/PlusJakartaSans-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/PlusJakartaSans-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/PlusJakartaSans-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/PlusJakartaSans-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/fonts/PlusJakartaSans-ExtraBold.ttf') format('truetype');
+}
