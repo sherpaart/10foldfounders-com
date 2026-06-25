@@ -143,6 +143,19 @@ body { overflow-x: clip; width: 100%; }
     transition: border-color 0.15s ease, background 0.15s ease;
   }
   .faq-show-more:active { background: rgba(37,99,196,0.06); }
+  /* Free CRM section: proper sizing on mobile */
+  [data-screen-label="Free CRM"] {
+    min-height: auto !important;
+  }
+  [data-screen-label="Free CRM"] div[style*="repeat(auto-fit, minmax(320px"] {
+    grid-template-columns: 1fr !important;
+  }
+  [data-screen-label="Free CRM"] [data-crm-tag] {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    margin-bottom: 8px;
+  }
   /* Module grid: single column on mobile */
   .fw-phase div[style*="repeat(auto-fit, minmax(180px"] {
     grid-template-columns: 1fr !important;
