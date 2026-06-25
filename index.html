@@ -40,6 +40,11 @@
     height: 32px !important;
     z-index: 3;
   }
+  /* Framework: stepper mode mobile fixes */
+  #fw { flex-direction: column !important; }
+  #fw-stepnav { gap: 6px !important; }
+  #fw-stepnav button[data-step] { min-width: 34px !important; height: 34px !important; font-size: 13px !important; }
+  .fw-phase { padding: 16px 4px !important; }
 }
 </style>
 <link rel="stylesheet" href="ds/10fold-founders-design-system-d0947cda-0ef7-4ea3-b688-82d4ba7b2524/tokens/fonts.css">
@@ -1834,7 +1839,7 @@ class Component extends DCLogic {
       if (cl) cl.addEventListener('click', closeModal);
     }
 
-    applyMode('rail');
+    applyMode(window.innerWidth < 760 ? 'stepper' : 'rail');
   }
 
   _runVidalytics(domId, code) {
