@@ -46,11 +46,88 @@ body { overflow-x: clip; width: 100%; }
   [data-screen-label="How it works"] div[style*="border: 1px solid rgba(183,155,240"] {
     text-align: center;
   }
-  /* Framework: stepper mode mobile fixes */
+  /* Framework: accordion mode on mobile */
   #fw { flex-direction: column !important; }
-  #fw-stepnav { gap: 6px !important; }
-  #fw-stepnav button[data-step] { min-width: 34px !important; height: 34px !important; font-size: 13px !important; }
-  .fw-phase { padding: 16px 4px !important; }
+  [data-screen-label="How it works"] > [ref] {
+    position: relative !important;
+  }
+  /* Accordion header buttons */
+  .fw-acc-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 4px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(27,35,80,0.10);
+    cursor: pointer;
+    font-family: var(--tf-font-headline);
+    font-weight: 700;
+    font-size: 16px;
+    color: #1B2350;
+    text-align: left;
+    transition: background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fw-acc-btn:active { background: rgba(27,35,80,0.04); }
+  .fw-acc-badge {
+    flex: 0 0 auto;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: #7C4DE0;
+    color: #ffffff;
+    font-family: var(--tf-font-headline);
+    font-weight: 800;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(124,77,224,0.3);
+  }
+  .fw-acc-badge[data-covenant] {
+    background: #D6A22E;
+    color: #1B2350;
+    box-shadow: 0 4px 10px rgba(214,162,46,0.3);
+  }
+  .fw-acc-chevron {
+    margin-left: auto;
+    flex: 0 0 auto;
+    width: 20px; height: 20px;
+    transition: transform 0.2s ease;
+    color: rgba(27,35,80,0.4);
+  }
+  .fw-acc-btn[aria-expanded="true"] .fw-acc-chevron {
+    transform: rotate(180deg);
+  }
+  /* Accordion panel */
+  .fw-acc-panel {
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.2s ease;
+    max-height: 0;
+    opacity: 0;
+  }
+  .fw-acc-panel[data-open] {
+    opacity: 1;
+  }
+  /* Phase content inside accordion */
+  .fw-phase { padding: 8px 0 16px !important; }
+  .fw-phase > div { max-width: 100% !important; }
+  /* Module grid: single column on mobile */
+  .fw-phase div[style*="repeat(auto-fit, minmax(180px"] {
+    grid-template-columns: 1fr !important;
+  }
+  .fw-phase div[style*="repeat(auto-fit, minmax(200px"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* "This month you" / "You leave with": stack vertically */
+  .fw-phase div[style*="flex-wrap: wrap"][style*="gap: 12px 28px"] {
+    flex-direction: column !important;
+  }
+}
+@media (min-width: 768px) {
+  .fw-acc-btn { display: none !important; }
+  .fw-acc-panel { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
 }
 </style>
 <link rel="stylesheet" href="ds/10fold-founders-design-system-d0947cda-0ef7-4ea3-b688-82d4ba7b2524/tokens/fonts.css">
@@ -1758,6 +1835,12 @@ class Component extends DCLogic {
 
     const resetAll = () => {
       clearScroll(); clearIO();
+      // Clean up accordion wrappers if they exist
+      track.querySelectorAll('.fw-acc-btn').forEach(el => el.remove());
+      track.querySelectorAll('.fw-acc-panel').forEach(panel => {
+        while (panel.firstChild) track.insertBefore(panel.firstChild, panel);
+        panel.remove();
+      });
       root.style.display='flex'; root.style.flexDirection='row'; root.style.gap='28px'; root.style.alignItems='flex-start';
       if (rail) rail.style.display='none';
       if (dots) dots.style.display='none';
@@ -1786,6 +1869,72 @@ class Component extends DCLogic {
         if (dots) dots.style.display='flex';
         phases.forEach(p=>{ p.style.minHeight='80vh'; p.style.display='flex'; p.style.flexDirection='column'; p.style.justifyContent='center'; p.style.scrollMarginTop='150px'; if(!reduce){ p.style.opacity='0'; p.style.transform='translateY(24px)'; p.style.transition='opacity 1s var(--tf-ease), transform 1s var(--tf-ease)'; } });
         observeReveal(); revealInView(); highlight();
+      } else if (m === 'accordion') {
+        // Mobile accordion: one phase open at a time
+        const names = ['Aspiration','Alignment','Architecture','Blueprint','Build','Benchmarking','Coordination','Capacitate','Covenant'];
+        // Remove any previously created accordion elements
+        track.querySelectorAll('.fw-acc-btn, .fw-acc-panel').forEach(el => el.remove());
+        // Wrap each phase in an accordion panel with a header button
+        phases.forEach((p, i) => {
+          const isCovenant = i === 8;
+          const panelId = 'fw-acc-p' + i;
+          // Create header button
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'fw-acc-btn';
+          btn.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+          btn.setAttribute('aria-controls', panelId);
+          btn.innerHTML = '<span class="fw-acc-badge"' + (isCovenant ? ' data-covenant' : '') + '>' + (i+1) + '</span>' +
+            '<span>' + names[i] + '</span>' +
+            '<svg class="fw-acc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="5 8 10 13 15 8"></polyline></svg>';
+          // Create panel wrapper
+          const panel = document.createElement('div');
+          panel.className = 'fw-acc-panel';
+          panel.id = panelId;
+          panel.setAttribute('role', 'region');
+          panel.setAttribute('aria-labelledby', 'fw-acc-h' + i);
+          btn.id = 'fw-acc-h' + i;
+          // Insert before the phase, then move phase into panel
+          track.insertBefore(btn, p);
+          track.insertBefore(panel, p);
+          panel.appendChild(p);
+          p.style.display = 'block';
+          p.style.opacity = '1';
+          p.style.transform = 'none';
+          if (i === 0) {
+            panel.setAttribute('data-open', '');
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            // Reflow then set auto so inner content can resize
+            requestAnimationFrame(() => { panel.style.maxHeight = 'none'; });
+          }
+          btn.addEventListener('click', () => {
+            const isOpen = btn.getAttribute('aria-expanded') === 'true';
+            // Close all
+            track.querySelectorAll('.fw-acc-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
+            track.querySelectorAll('.fw-acc-panel').forEach(pnl => {
+              pnl.style.maxHeight = pnl.scrollHeight + 'px';
+              requestAnimationFrame(() => { pnl.style.maxHeight = '0'; pnl.removeAttribute('data-open'); });
+            });
+            if (!isOpen) {
+              btn.setAttribute('aria-expanded', 'true');
+              panel.setAttribute('data-open', '');
+              panel.style.maxHeight = '0';
+              requestAnimationFrame(() => {
+                panel.style.maxHeight = panel.scrollHeight + 'px';
+                setTimeout(() => { panel.style.maxHeight = 'none'; }, 260);
+              });
+              // Scroll header into view
+              setTimeout(() => btn.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }), 50);
+            }
+          });
+        });
+        // Hide desktop-only elements
+        if (rail) rail.style.display = 'none';
+        if (dots) dots.style.display = 'none';
+        if (progress) progress.style.display = 'none';
+        if (stepnav) stepnav.style.display = 'none';
+        const expandWrap = document.getElementById('fw-expand-wrap');
+        if (expandWrap) expandWrap.style.display = 'none';
       } else if (m === 'pinned') {
         const mobile = window.innerWidth < 760;
         if (progress) progress.style.display='block';
@@ -1845,7 +1994,7 @@ class Component extends DCLogic {
       if (cl) cl.addEventListener('click', closeModal);
     }
 
-    applyMode(window.innerWidth < 760 ? 'stepper' : 'rail');
+    applyMode(window.innerWidth < 768 ? 'accordion' : 'rail');
   }
 
   _runVidalytics(domId, code) {
