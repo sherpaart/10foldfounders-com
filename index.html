@@ -143,18 +143,59 @@ body { overflow-x: clip; width: 100%; }
     transition: border-color 0.15s ease, background 0.15s ease;
   }
   .faq-show-more:active { background: rgba(37,99,196,0.06); }
-  /* Free CRM section: proper sizing on mobile */
+  /* Free CRM section: proper sizing and reorder on mobile */
   [data-screen-label="Free CRM"] {
     min-height: auto !important;
   }
   [data-screen-label="Free CRM"] div[style*="repeat(auto-fit, minmax(320px"] {
     grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
+  /* Copy column: break it open so we can interleave the images */
+  [data-screen-label="Free CRM"] div[style*="repeat(auto-fit, minmax(320px"] > div {
+    display: contents !important;
+  }
+  /* Order: tag → title → h2 → images → body copy → checklist → footer */
   [data-screen-label="Free CRM"] [data-crm-tag] {
     position: relative !important;
     top: auto !important;
     right: auto !important;
-    margin-bottom: 8px;
+    order: 1;
+    margin-bottom: 4px;
+  }
+  [data-screen-label="Free CRM"] span[style*="text-transform: uppercase"][style*="color: #D6A22E"] {
+    order: 2;
+  }
+  [data-screen-label="Free CRM"] h2 {
+    order: 3;
+  }
+  [data-screen-label="Free CRM"] [data-crm-cluster] {
+    order: 4;
+    margin: 20px auto;
+    position: relative !important;
+  }
+  [data-screen-label="Free CRM"] p[style*="color: #C9DCF0"][style*="line-height: 1.6"] {
+    order: 5;
+  }
+  [data-screen-label="Free CRM"] ul {
+    order: 6;
+  }
+  [data-screen-label="Free CRM"] p[style*="color: rgba(201,220,240,0.68)"] {
+    order: 7;
+  }
+  [data-screen-label="Free CRM"] div[style*="border-top: 1px solid"] {
+    order: 8;
+  }
+  /* The stat badges at bottom-right of images */
+  [data-screen-label="Free CRM"] div[data-comment-anchor] {
+    order: 4;
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
+    justify-content: center;
+    margin-top: -8px;
+    margin-bottom: 12px;
   }
   /* Module grid: single column on mobile */
   .fw-phase div[style*="repeat(auto-fit, minmax(180px"] {
