@@ -120,9 +120,18 @@ body { overflow-x: clip; width: 100%; }
   .fw-phase div[style*="repeat(auto-fit, minmax(200px"] {
     grid-template-columns: 1fr !important;
   }
-  /* "This month you" / "You leave with": stack vertically */
+  /* "This month you" / "You leave with": stack vertically, tighter spacing */
   .fw-phase div[style*="flex-wrap: wrap"][style*="gap: 12px 28px"] {
     flex-direction: column !important;
+    gap: 10px !important;
+    margin-top: 14px !important;
+  }
+  /* Guest card and module grid: tighter margins */
+  .fw-phase div[style*="flex-wrap: wrap"][style*="gap: 14px"][style*="margin-top: 22px"] {
+    margin-top: 14px !important;
+  }
+  .fw-phase div[style*="margin-top: 22px"][style*="grid-template-columns"] {
+    margin-top: 14px !important;
   }
 }
 @media (min-width: 768px) {
@@ -1938,8 +1947,8 @@ class Component extends DCLogic {
                 panel.style.maxHeight = h + 'px';
                 setTimeout(() => { panel.style.maxHeight = 'none'; }, 260);
               });
-              // Scroll header into view
-              setTimeout(() => btn.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }), 50);
+              // Scroll button to top after panels have settled
+              setTimeout(() => btn.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }), 280);
             }
           });
         });
