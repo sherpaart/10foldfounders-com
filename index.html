@@ -16,6 +16,27 @@
 <x-dc data-props='{"darkSurface":{"editor":"enum","default":"Logo gradient","options":["Indigo navy","Logo gradient"],"tsType":"string"},"problemLayout":{"editor":"enum","default":"Split","options":["Split","Overlay"],"tsType":"string"}}'>
 <helmet>
 <!-- ANALYTICS: paste Google Analytics + ad tracking scripts here -->
+<style>
+@media (max-width: 767px) {
+  /* What's Inside: always show text first, image second on mobile */
+  [data-screen-label="What's inside"] [data-reveal][style*="aspect-ratio"] {
+    order: 2 !important;
+  }
+  [data-screen-label="What's inside"] [data-reveal]:not([style*="aspect-ratio"]) {
+    order: 1 !important;
+  }
+  /* Reposition decorative icons so they don't overflow off-screen */
+  [data-screen-label="What's inside"] [data-reveal][style*="aspect-ratio"] > div[style*="position: absolute"] {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: -8px;
+  }
+}
+</style>
 <link rel="stylesheet" href="ds/10fold-founders-design-system-d0947cda-0ef7-4ea3-b688-82d4ba7b2524/tokens/fonts.css">
 <link rel="stylesheet" href="ds/10fold-founders-design-system-d0947cda-0ef7-4ea3-b688-82d4ba7b2524/tokens/colors.css">
 <link rel="stylesheet" href="ds/10fold-founders-design-system-d0947cda-0ef7-4ea3-b688-82d4ba7b2524/tokens/typography.css">
